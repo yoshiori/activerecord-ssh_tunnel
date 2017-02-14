@@ -33,7 +33,11 @@ module ActiveRecord
       end
 
       remove_connection
-      connection_handler.establish_connection self, spec
+      if ActiveRecord::VERSION::MAJOR >= 5
+        connection_handler.establish_connection spec
+      else
+        connection_handler.establish_connection self, spec
+      end
     end
   end
 end
